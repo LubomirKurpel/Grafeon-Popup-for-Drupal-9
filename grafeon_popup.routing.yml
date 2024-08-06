@@ -1,0 +1,7 @@
+grafeon_popup.settings:
+  path: '/admin/config/grafeon-popup'
+  defaults:
+    _form: '\Drupal\grafeon_popup\Form\GrafeonPopupForm'
+    _title: 'Grafeon Popup Settings'
+  requirements:
+    _permission: 'administer site configuration'

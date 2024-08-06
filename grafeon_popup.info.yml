@@ -1,0 +1,7 @@
+name: 'Grafeon Popup'
+type: module
+description: 'A module to display a dismissible popup with a 30-day cookie.'
+core_version_requirement: ^9
+package: Custom
+dependencies:
+  - drupal:options

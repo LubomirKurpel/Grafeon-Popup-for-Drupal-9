@@ -1,0 +1,6 @@
+grafeon_popup.admin:
+  title: 'Grafeon Popup'
+  description: 'Configure the Grafeon Popup settings.'
+  parent: system.admin_config
+  route_name: grafeon_popup.settings
+  weight: 100

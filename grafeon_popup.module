@@ -1,0 +1,37 @@
+<?php
+
+function grafeon_popup_page_attachments(array &$attachments) {
+  $config = \Drupal::config('grafeon_popup.settings');
+  $enabled = $config->get('enabled');
+  $title = $config->get('title');
+  $message = $config->get('message');
+  $cookie_days = $config->get('cookie_days') ?? 30;
+  $version = $config->get('version');
+
+  if ($enabled) {
+    $markup = '<div id="grafeon-popup" class="grafeon-popup" style="display:none; position: fixed; bottom: 20px; right: 20px; background-color: #fff; padding: 20px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 1000;">
+                 <div class="popup-content" style="position: relative;">
+                   <span id="close-popup" class="close-popup" style="position: absolute; top: 5px; right: 10px; cursor: pointer; font-size: 20px;">&times;</span>
+                   <h2>' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '</h2>
+                   <p>' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p>
+                 </div>
+               </div>';
+
+    $attachments['#attached']['html_head'][] = [
+      [
+        '#type' => 'markup',
+        '#markup' => $markup,
+      ],
+      'grafeon_popup',
+    ];
+
+    $attachments['#attached']['library'][] = 'grafeon_popup/popup';
+
+    // Pass settings to JavaScript.
+    $attachments['#attached']['drupalSettings']['grafeonPopup']['cookieDays'] = $cookie_days;
+    $attachments['#attached']['drupalSettings']['grafeonPopup']['version'] = $version;
+    
+    // Add cache tags to ensure that the cache is invalidated when settings change.
+    $attachments['#cache']['tags'][] = 'config:grafeon_popup.settings';
+  }
+}
